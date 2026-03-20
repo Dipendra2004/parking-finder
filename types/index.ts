@@ -23,14 +23,15 @@ export interface ParkingSpot {
   longitude: number;
   type: SpotType;
   status: SpotStatus;
-  pricePerHour: number | null;   // null = free
+  pricePerHour: number | null;
   isFree: boolean;
   totalSlots: number;
   availableSlots: number;
   hasEVCharging: boolean;
   isActive: boolean;
-  distance?: number;             // km from user — added at query time
+  distance?: number;
   createdAt: string;
+  availability?: Availability;   // ← add this line
 }
 
 // ─── Availability ────────────────────────────────────────────────────────────
