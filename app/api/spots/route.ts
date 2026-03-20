@@ -38,6 +38,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ success: true, data: filtered });
   } catch (err) {
+    console.error("spots error:", err);
     return NextResponse.json({ success: false, message: "Failed to fetch spots" }, { status: 500 });
   }
 }

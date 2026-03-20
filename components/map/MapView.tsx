@@ -4,16 +4,15 @@ import { useCallback, useRef } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { Coordinates } from "@/types";
 
+const libraries: ("places")[] = ["places"];
+
 interface MapViewProps {
   center: Coordinates;
   children?: React.ReactNode;
   onMapClick?: (coords: Coordinates) => void;
 }
 
-const mapStyles = {
-  width: "100%",
-  height: "100%",
-};
+const mapStyles = { width: "100%", height: "100%" };
 
 const defaultOptions = {
   zoomControl: true,
@@ -27,7 +26,7 @@ export function MapView({ center, children, onMapClick }: MapViewProps) {
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!,
-    libraries: ["places"],
+    libraries,
   });
 
   const onLoad = useCallback((map: google.maps.Map) => {
