@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+
+  bookmarks Bookmark[]
+  reviews   Review[]
+}
+
+model ParkingSpot {
+  id             String     @id @default(uuid())
+  name           String
+  address        String
+  latitude       Float
+  longitude      Float
+  type           SpotType   @default(OPEN)
+  status         SpotStatus @default(AVAILABLE)
+  pricePerHour   Float?
+  isFree         Boolean    @default(false)
+  totalSlots     Int
+  hasEVCharging  Boolean    @default(false)
+  isActive       Boolean    @default(true)
+  createdAt      DateTime   @default(now())
+
+  availability Availability?
+  reviews      Review[]
+  bookmarks    Bookmark[]
+}
+
+model Availability {
+  id             String      @id @default(uuid())
+  spotId         String      @unique
+  availableSlots Int
+  updatedAt      DateTime    @updatedAt
+
+  spot ParkingSpot @relation(fields: [spotId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+
+  userId String
+  spotId String
+  user   User        @relation(fields: [userId], references: [id])
+  spot   ParkingSpot @relation(fields: [spotId], references: [id])
+}
+
+model Bookmark {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  userId String
+  spotId String
+  user   User        @relation(fields: [userId], references: [id])
+  spot   ParkingSpot @relation(fields: [spotId], references: [id])
+
+  @@unique([userId, spotId])
+}
+
+enum Role {
+  USER
+  ADMIN
+  OWNER
+}
+
+enum SpotType {
+  OPEN
+  COVERED
+  UNDERGROUND
+  MULTI_STOREY
+}
+
+enum SpotStatus {
+  AVAILABLE
+  FULL
+  CLOSED
+}
