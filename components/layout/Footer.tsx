@@ -7,8 +7,9 @@ import { Footer as FooterUI } from "@/components/ui/footer"
 export function Footer() {
   const pathname = usePathname();
   const isAuthPage = pathname?.startsWith('/login') || pathname?.startsWith('/register');
+  const isMapPage = pathname === '/';
   
-  if (isAuthPage) return null;
+  if (isAuthPage || isMapPage) return null;
 
   return (
     <div className="w-full bg-[#0a0a0a] text-white">
