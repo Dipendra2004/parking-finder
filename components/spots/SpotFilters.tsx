@@ -1,10 +1,11 @@
 "use client";
 
+import { useMemo } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { SpotFilters as FilterType, SpotType } from "@/types";
+import { SpotFilters as FilterType } from "@/types";
 import { SlidersHorizontal } from "lucide-react";
 
 interface SpotFiltersProps {
@@ -13,12 +14,26 @@ interface SpotFiltersProps {
 }
 
 export function SpotFilters({ filters, onChange }: SpotFiltersProps) {
-  const activeCount = Object.values(filters).filter(Boolean).length;
+  const activeCount = useMemo(() => {
+    let count = 0;
+    if (filters.type) count += 1;
+    if (filters.isFree !== undefined) count += 1;
+    if (filters.hasEVCharging) count += 1;
+    if (filters.radius && filters.radius !== 5) count += 1;
+    return count;
+  }, [filters]);
+
+  const setType = (value: string) => {
+    onChange({
+      ...filters,
+      type: value === "all" ? undefined : (value as FilterType["type"]),
+    });
+  };
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="outline" size="sm" className="gap-2 bg-background/90 backdrop-blur">
           <SlidersHorizontal className="w-4 h-4" />
           Filters
           {activeCount > 0 && (
@@ -29,7 +44,7 @@ export function SpotFilters({ filters, onChange }: SpotFiltersProps) {
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="right" className="w-80">
+      <SheetContent side="right" className="w-full sm:w-96">
         <SheetHeader>
           <SheetTitle>Filter spots</SheetTitle>
         </SheetHeader>
@@ -39,9 +54,7 @@ export function SpotFilters({ filters, onChange }: SpotFiltersProps) {
             <p className="text-sm font-medium">Parking type</p>
             <Select
               value={filters.type ?? "all"}
-              onValueChange={(v) =>
-                onChange({ ...filters, type: v === "all" ? undefined : v as SpotType })
-              }
+              onValueChange={setType}
             >
               <SelectTrigger>
                 <SelectValue placeholder="All types" />
@@ -61,7 +74,7 @@ export function SpotFilters({ filters, onChange }: SpotFiltersProps) {
             <div className="flex gap-2">
               {[undefined, true, false].map((val, i) => (
                 <Button
-                  key={i}
+                  key={String(val)}
                   size="sm"
                   variant={filters.isFree === val ? "default" : "outline"}
                   onClick={() => onChange({ ...filters, isFree: val })}
@@ -96,14 +109,14 @@ export function SpotFilters({ filters, onChange }: SpotFiltersProps) {
               className="w-fit"
               onClick={() => onChange({ ...filters, hasEVCharging: !filters.hasEVCharging })}
             >
-              ⚡ EV Charging
+              EV Charging
             </Button>
           </div>
 
           <Button
             variant="ghost"
             className="w-full mt-2"
-            onClick={() => onChange({})}
+            onClick={() => onChange({ radius: 5 })}
           >
             Clear all filters
           </Button>

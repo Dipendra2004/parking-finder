@@ -1,7 +1,6 @@
 "use client";
 
-import { Marker, InfoWindow } from "@react-google-maps/api";
-import { useState } from "react";
+import { Marker } from "@react-google-maps/api";
 import { ParkingSpot } from "@/types";
 
 interface SpotMarkerProps {
@@ -10,21 +9,20 @@ interface SpotMarkerProps {
 }
 
 export function SpotMarker({ spot, onClick }: SpotMarkerProps) {
-  const [showInfo, setShowInfo] = useState(false);
+  const status = String(spot.status ?? "").toUpperCase();
+  const available = spot.availability?.availableSlots ?? spot.availableSlots;
 
-  const pinColor = spot.availability?.availableSlots === 0
-    ? "red"
-    : spot.isFree
-    ? "green"
-    : "blue";
+  const pinColor =
+    status === "FULL" || available <= 0
+      ? "#ef4444"
+      : spot.isFree
+        ? "#22c55e"
+        : "#3b82f6";
 
   return (
     <Marker
       position={{ lat: spot.latitude, lng: spot.longitude }}
-      onClick={() => {
-        setShowInfo(true);
-        onClick?.(spot);
-      }}
+      onClick={() => onClick?.(spot)}
       icon={{
         path: google.maps.SymbolPath.CIRCLE,
         scale: 10,
@@ -33,16 +31,6 @@ export function SpotMarker({ spot, onClick }: SpotMarkerProps) {
         strokeColor: "#fff",
         strokeWeight: 2,
       }}
-    >
-      {showInfo && (
-        <InfoWindow onCloseClick={() => setShowInfo(false)}>
-          <div className="text-sm p-1">
-            <p className="font-medium">{spot.name}</p>
-            <p className="text-muted-foreground">{spot.isFree ? "Free" : `₹${spot.pricePerHour}/hr`}</p>
-            <p>{spot.availability?.availableSlots ?? 0} slots available</p>
-          </div>
-        </InfoWindow>
-      )}
-    </Marker>
+    />
   );
 }
