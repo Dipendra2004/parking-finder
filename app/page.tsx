@@ -124,7 +124,7 @@ export default function Home() {
       )}
 
       {/* SIDEBAR OVERLAY */}
-      <aside className="absolute lg:top-32 top-32 lg:left-8 left-4 bottom-4 lg:bottom-8 w-[calc(100%-2rem)] lg:w-96 z-10 flex flex-col gap-4 pointer-events-none">
+      <aside className="absolute lg:top-4 top-4 lg:left-8 left-4 bottom-4 lg:bottom-8 w-[min(calc(100%-2rem),22rem)] lg:w-96 z-10 flex flex-col gap-4 pointer-events-none">
         
         {/* Search & Filter Area */}
         <div className="bg-[#1a1919]/80 backdrop-blur-xl p-6 rounded-xl border border-white/5 shadow-2xl pointer-events-auto">
