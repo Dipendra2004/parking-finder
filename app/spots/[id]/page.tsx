@@ -6,6 +6,7 @@ import { ArrowLeft, ExternalLink, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LiveAvailability } from "@/components/spots/LiveAvailability";
 import { ParkingSpot, Review } from "@/types";
 
 type SpotDetail = ParkingSpot & {
@@ -52,11 +53,6 @@ export default function SpotDetailPage() {
 
   const availableSlots = spot?.availability?.availableSlots ?? spot?.availableSlots ?? 0;
   const totalSlots = spot?.availability?.totalSlots ?? spot?.totalSlots ?? 0;
-
-  const occupancy = useMemo(() => {
-    if (!totalSlots) return 0;
-    return Math.min(100, Math.max(0, Math.round(((totalSlots - availableSlots) / totalSlots) * 100)));
-  }, [availableSlots, totalSlots]);
 
   const avgRating = useMemo(() => {
     const reviews = spot?.reviews ?? [];
@@ -121,14 +117,11 @@ export default function SpotDetailPage() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm text-muted-foreground">Available Slots</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-semibold">{availableSlots}/{totalSlots}</p>
-          </CardContent>
-        </Card>
+        <LiveAvailability
+          spotId={spot.id}
+          initialSlots={availableSlots}
+          totalSlots={totalSlots}
+        />
 
         <Card>
           <CardHeader>
@@ -140,19 +133,6 @@ export default function SpotDetailPage() {
             <p className="text-xs text-muted-foreground">({spot.reviews?.length ?? 0} reviews)</p>
           </CardContent>
         </Card>
-      </section>
-
-      <section className="mt-5 rounded-xl border bg-card p-4">
-        <div className="mb-2 flex items-center justify-between text-sm">
-          <p className="font-medium">Occupancy</p>
-          <p className="text-muted-foreground">{occupancy}% full</p>
-        </div>
-        <div className="h-3 w-full overflow-hidden rounded-full bg-muted">
-          <div
-            className={`h-full rounded-full transition-all ${occupancy > 85 ? "bg-destructive" : occupancy > 60 ? "bg-amber-500" : "bg-primary"}`}
-            style={{ width: `${occupancy}%` }}
-          />
-        </div>
       </section>
 
       <section className="mt-5">
