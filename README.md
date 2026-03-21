@@ -14,7 +14,7 @@
 ## ✨ Features
 
 - 🗺️ **Interactive Google Map** — Browse parking spots on a live, dark-themed map with custom markers
-- 📍 **Geolocation** — Automatically centres the map on the user's current location
+- 📍 **Geolocation** — Automatically centers the map on the user's current location
 - 🔍 **Smart Search** — Search by neighbourhood or street name with geocoding support
 - 🎛️ **Advanced Filters** — Filter by spot type (open/covered/underground/multi-storey), price, EV charging availability, and search radius
 - ⚡ **Real-time Availability** — Socket.IO-powered live slot counts so users always see up-to-date occupancy
