@@ -21,6 +21,7 @@ model User {
   sessions  Session[]
   bookmarks Bookmark[]
   reviews   Review[]
+  bookings  Booking[]
 }
 
 model ParkingSpot {
@@ -41,6 +42,7 @@ model ParkingSpot {
   availability Availability?
   reviews      Review[]
   bookmarks    Bookmark[]
+  bookings     Booking[]
 }
 
 model Availability {
@@ -127,4 +129,27 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Booking {
+  id          String        @id @default(uuid())
+  userId      String
+  spotId      String
+  startTime   DateTime
+  endTime     DateTime?
+  duration    Int?          // Duration in hours
+  totalPrice  Float?
+  status      BookingStatus @default(ACTIVE)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  spot        ParkingSpot   @relation(fields: [spotId], references: [id], onDelete: Cascade)
+}
+
+enum BookingStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  CANCELLED
 }

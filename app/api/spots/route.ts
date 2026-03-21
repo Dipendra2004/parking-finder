@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
   const radius = parseFloat(searchParams.get("radius") ?? "5");
   const isFree = searchParams.get("isFree");
   const type = searchParams.get("type");
+  const hasEVCharging = searchParams.get("hasEVCharging");
 
   try {
     const spots = await db.parkingSpot.findMany({
@@ -16,6 +17,7 @@ export async function GET(req: NextRequest) {
         isActive: true,
         ...(isFree !== null && { isFree: isFree === "true" }),
         ...(type && { type: type as any }),
+        ...(hasEVCharging !== null && { hasEVCharging: hasEVCharging === "true" }),
       },
       include: {
         availability: true,

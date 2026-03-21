@@ -20,6 +20,7 @@ export function useNearbySpots(coords: Coordinates | null, filters?: SpotFilters
           radius: (filters?.radius ?? 5).toString(),
           ...(filters?.isFree !== undefined && { isFree: filters.isFree.toString() }),
           ...(filters?.type && { type: filters.type }),
+          ...(filters?.hasEVCharging !== undefined && { hasEVCharging: filters.hasEVCharging.toString() }),
         });
 
         const res = await fetch(`/api/spots?${params}`);
@@ -35,7 +36,7 @@ export function useNearbySpots(coords: Coordinates | null, filters?: SpotFilters
     };
 
     fetchSpots();
-  }, [coords, filters?.isFree, filters?.type, filters?.radius]);
+  }, [coords, filters?.isFree, filters?.type, filters?.radius, filters?.hasEVCharging]);
 
   return { spots, loading, error };
 }
