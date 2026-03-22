@@ -54,8 +54,8 @@ export function SpotFilters({ filters, onChange, open, onOpenChange, hideTrigger
           <SheetTitle className="text-2xl font-bold tracking-tight text-white mb-2">Filters</SheetTitle>
         </SheetHeader>
 
-        <div className="flex flex-col gap-8 mt-4 flex-1">
-          <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-8 mt-4 flex-1 items-center text-center">
+          <div className="flex flex-col gap-3 items-center w-full">
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Parking Type</p>
             <Select
               value={filters.type ?? "all"}
@@ -74,9 +74,9 @@ export function SpotFilters({ filters, onChange, open, onOpenChange, hideTrigger
             </Select>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 items-center w-full">
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Pricing Constraint</p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 justify-center">
               {[undefined, true, false].map((val, i) => (
                 <Button
                   key={String(val)}
@@ -90,9 +90,9 @@ export function SpotFilters({ filters, onChange, open, onOpenChange, hideTrigger
             </div>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 items-center w-full">
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Search Radius</p>
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-2 flex-wrap justify-center">
               {[2, 5, 10, 20].map((r) => (
                 <Button
                   key={r}
@@ -106,7 +106,7 @@ export function SpotFilters({ filters, onChange, open, onOpenChange, hideTrigger
             </div>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 items-center w-full">
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Required Amenities</p>
             <Button
               size="sm"
