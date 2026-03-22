@@ -138,6 +138,25 @@ App runs at `http://localhost:3000`.
 | Start | `npm run start` | Run production custom server |
 | Seed | `npm run seed` | Seed sample parking spots + availability |
 
+## Screenshots
+
+> Save your UI screenshots as `.png` files in `public/screenshots` for these to render on GitHub.
+
+- **Map and search**  
+  ![Map and search](./public/screenshots/map-view.png)
+
+- **Spot details and booking**  
+  ![Spot details and booking](./public/screenshots/spot-details.png)
+
+- **Booking summary**  
+  ![Booking summary](./public/screenshots/booking-summary.png)
+
+- **Sign up**  
+  ![Sign up screen](./public/screenshots/sign-up.png)
+
+- **Sign in**  
+  ![Sign in screen](./public/screenshots/sign-in.png)
+
 ## Project Structure
 
 ```text
