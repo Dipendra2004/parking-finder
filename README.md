@@ -142,11 +142,20 @@ App runs at `http://localhost:3000`.
 
 Save your UI screenshots as `.png` files in `public/screenshots`.
 
-- **Map and search** – add `public/screenshots/map-view.png`
-- **Spot details and booking** – add `public/screenshots/spot-details.png`
-- **Booking summary** – add `public/screenshots/booking-summary.png`
-- **Sign up** – add `public/screenshots/sign-up.png`
-- **Sign in** – add `public/screenshots/sign-in.png`
+- **Map and search**  
+  ![Map and search](./public/screenshots/map-view.png)
+
+- **Spot details and booking**  
+  ![Spot details and booking](./public/screenshots/spot-details.png)
+
+- **Booking summary**  
+  ![Booking summary](./public/screenshots/booking-summary.png)
+
+- **Sign up**  
+  ![Sign up screen](./public/screenshots/sign-up.png)
+
+- **Sign in**  
+  ![Sign in screen](./public/screenshots/sign-in.png)
 
 ## Project Structure
 
