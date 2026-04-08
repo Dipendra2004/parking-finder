@@ -4,6 +4,7 @@ import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { ParkingSpot } from "@/types";
+import { LiveAvailability } from "@/components/spots/LiveAvailability";
 
 const fetchSpotDetails = async (id: string): Promise<ParkingSpot | null> => {
   try {
@@ -145,25 +146,11 @@ export default function SpotDetailPage({ params }: { params: Promise<{ id: strin
             
             {/* Availability Bento Section */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="bg-[#1a1919] rounded-2xl p-6 sm:p-8 border-l-[6px] border-[#85adff] shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
-                <div className="flex justify-between items-start mb-8">
-                  <span className="text-[#adaaaa] font-bold text-[10px] uppercase tracking-widest">Real-time Occupancy</span>
-                  <div className={`w-3 h-3 rounded-full animate-pulse shadow-[0_0_10px_currentColor] ${isFull ? 'bg-[#ff716c] text-[#ff716c]' : 'bg-[#69f6b8] text-[#69f6b8]'}`}></div>
-                </div>
-                <div className="flex items-baseline gap-2 mb-4">
-                  <span className="text-4xl font-extrabold tracking-tighter text-white">{occupancyPercent}%</span>
-                  <span className="text-[#adaaaa] text-sm font-medium tracking-tight">Full</span>
-                </div>
-                <div className="w-full h-2.5 bg-[#262626] rounded-full overflow-hidden shadow-inner">
-                  <div 
-                    className={`h-full rounded-full transition-all duration-1000 ${isFull ? 'bg-[#ff716c]' : 'bg-gradient-to-r from-[#85adff] to-[#ac8aff]'}`}
-                    style={{ width: `${Math.min(occupancyPercent, 100)}%` }}
-                  ></div>
-                </div>
-                <p className="mt-5 text-sm font-medium text-[#adaaaa]">
-                  {availableSlots} out of {totalSlots} slots remaining.
-                </p>
-              </div>
+              <LiveAvailability 
+                spotId={spot.id}
+                initialSlots={availableSlots}
+                totalSlots={totalSlots}
+              />
 
               <div className="bg-[#1a1919] rounded-2xl p-6 sm:p-8 border-l-[6px] border-[#9bffce] shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
                 <div className="flex justify-between items-start mb-8">
